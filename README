@@ -1,0 +1,10 @@
+Unbufferd channel: No capcity, that is when a go routine sends data to an unbuffered channel it immediately sends that data to another go routine.
+Pros: 1) Unbuffered channels are synchronous, which means that a goroutine sending data to one will block until another goroutine is prepared to accept it. A goroutine that accepts data from an unbuffered channel will similarly block until new data becomes available. 2) Since there's no buffer, no additional memory is allocated to store intermediate values.
+Cons: 1) Can lead to deadloks the sender an reciever are not ready, in complex concurrent programs.
+
+Buffered Channels: has a capacity to hold a fixed number of values.
+Pros: 1)The sender can send data to the channel without an immediate receiver, up to the buffer's capacity. 2)Received will only be blocked if there are no values in the channel to receive, and send will only be blocked if there is no buffer available to place the value being sent.
+Cons: 1)A deadlock in a buffered channel in Go occurs when a goroutine is trying to send data to a channel that is already full, or when a goroutine is trying to receive data from an empty channel.
+
+BETTER OUT OF THE TWO: It depends on the requirement, however Unbuffered channels perform somewhat better because the send and receive processes are coordinated and when we don't know how many goroutines we need to launch.
+Also, An unbuffered channel ensures that an exchange between two goroutines occurs at the same time as the send and receive. A buffered channel provides no such assurance.
